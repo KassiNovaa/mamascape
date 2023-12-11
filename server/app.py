@@ -86,7 +86,7 @@ api.add_resource(Journal, '/api/v1/journals')
 
 class JournalbyId(Resource):
     def delete(self, id):
-        journal = Journal.query.filter_by(id)
+        journal = Journal.query.filter_by(id=id).first()
         if not journal:
             return make_response({'error': 'journal not found'}, 404)
         db.session.delete(journal)
