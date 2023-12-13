@@ -12,11 +12,20 @@ from config import app, db, api
 # Add your model imports
 from models import User, Affirmation, Favorite, Journal;
 
-class Affirmation(Resource):       
+class Affirmations(Resource):       
     def get(self):
         affirmations = Affirmation.query.all()
         random_affirmation = random.choice(affirmations)
         return make_response({'affirmation': random_affirmation.to_dict()}, 200)
+
+api.add_resource(Affirmations, '/api/v1/affirmation')
+
+class AffirmationbyId(Resource):
+    def get(self, id):
+        affirmation = Affirmation.query.get(id)
+        if not affirmation:
+            return make_response({'error': 'affirmation not found'}, 404)
+        return make_response({'affirmation': affirmation.to_dict()}, 200)
     
     def patch(self, id):
         favorite = Affirmation.query.filter_by(id=id).first()
@@ -26,13 +35,19 @@ class Affirmation(Resource):
         favorite.like_count = params['like_count']
         db.session.commit()
         return make_response({'favorite': favorite.to_dict()}, 200) 
-
-api.add_resource(Affirmation, '/api/v1/affirmations')
+    
+api.add_resource(AffirmationbyId, '/api/v1/affirmation/<int:id>')
 
 class Favorite(Resource):
-    def post(self):
+    def get(self, user_id):
+        favorites = Favorite.query.filter(user_id).all()
+        affirmations = [favorite.affirmation for favorite in favorites]
+        affirmations_dict = [affirmation.to_dict() for affirmation in affirmations]
+        return make_response({'favorites': affirmations_dict}, 200)
+
+    def post(self, user_id ):
         params = request.json
-        existing_favorite = Favorite.query.filter_by(user_id=params['user_id'], affirmation_id=params['affirmation_id']).first()
+        existing_favorite = Favorite.query.filter_by( user_id = user_id, affirmation_id=params['affirmation_id']).first()
         if existing_favorite:
             return make_response({'error': 'favorite already exists'}, 409)
         else:
@@ -41,14 +56,9 @@ class Favorite(Resource):
         db.session.commit()
         return make_response({'favorite': favorite.to_dict()}, 201)
     
-api.add_resource(Favorite, '/api/v1/favorites')
+api.add_resource(Favorite, '/api/v1/users/<int:user_id>/favorites' )
 
 class FavoritebyId(Resource):
-    def get(self, user_id):
-        favorites = Favorite.query.filter(user_id).all()
-        affirmations = [favorite.affirmation for favorite in favorites]
-        affirmations_dict = [affirmation.to_dict() for affirmation in affirmations]
-        return make_response({'favorites': affirmations_dict}, 200)
 
     def delete(self, id):
         favorite = Favorite.query.filter_by(id).first()
@@ -58,7 +68,7 @@ class FavoritebyId(Resource):
         db.session.commit()
         return make_response('', 204)
 
-api.add_resource(FavoritebyId, '/api/v1/favorites/<int:id>', '/api/v1/favorites/<int:user_id>')
+api.add_resource(FavoritebyId, '/api/v1/favorites/<int:id>')
 
 class Journal(Resource):
     def get(self):

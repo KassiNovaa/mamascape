@@ -8,7 +8,7 @@ from config import db, bcrypt
 ## This is the affirmations many to many model
 
 class User(db.Model, SerializerMixin):
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String)
     lastname = db.Column(db.String)
     motherhood_status = db.Column(db.String)
@@ -17,15 +17,13 @@ class User(db.Model, SerializerMixin):
     _password_hash = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), onupdate=db.func.now())
-    journals = db.relationship('Journal', back_populates = 'user')
-    favorites = db.relationship('Favorite', back_populates = 'user')
-    affirmations = association_proxy('favorites', 'affirmation')
-    serialize_rules = ('-favorites.user', '-favorites.affirmation', '-journals.user','-_password_hash')
-    
+    journals = db.relationship('Journal', back_populates='user')
+    serialize_rules = ('-journals.user', '-_password_hash')
+
     @property
     def password_hash(self):
         return self._password_hash
-    
+
     @password_hash.setter
     def password_hash(self, plain_text_password):
         byte_object = plain_text_password.encode('utf-8')
@@ -36,32 +34,32 @@ class User(db.Model, SerializerMixin):
     def authenticate(self, password_string):
         byte_object = password_string.encode('utf-8')
         return bcrypt.check_password_hash(self.password_hash, byte_object)
-        
+
     def __repr__(self):
         return f'<User {self.id}: {self.name}>'
 
 class Affirmation(db.Model, SerializerMixin):
     __tablename__ = 'affirmations'
 
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
     quote = db.Column(db.String)
     like_count = db.Column(db.Integer)
-    favorites = db.relationship('Favorite', back_populates = 'affirmation')
-    users = association_proxy('favorites', 'user')
-    serialize_rules = ('-favorites.user', '-users.affirmation')
-    
+    serialize_rules = ('-favorites.user', '-users.affirmations')
+
+    users = association_proxy('favorites', 'user', creator=lambda user: Favorite(user=user))
+
     def __repr__(self):
-        return f'<affirmation {self.id}: {self.quote}>'
-    
+        return f'<Affirmation {self.id}: {self.quote}>'
+
 class Favorite(db.Model, SerializerMixin):
     __tablename__ = 'favorites'
 
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     affirmation_id = db.Column(db.Integer, db.ForeignKey('affirmations.id'))
-    user = db.relationship('User', back_populates = 'favorites')
-    affirmation = db.relationship('Affirmation', back_populates = 'favorites')
-    serialize_rules = ('-favorites.user', '-favorites.affirmation')
+
+    user = db.relationship('User')
+    affirmation = db.relationship('Affirmation')
 
     def __repr__(self):
         return f'<Favorite {self.id}: {self.user_id} {self.affirmation_id}>'

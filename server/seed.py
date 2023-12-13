@@ -22,18 +22,18 @@ if __name__ == '__main__':
 
         print("creating users...")
        
-        u1 = User(name = 'Mama', motherhood_status = 'Pregnant', username = 'mama', email = 'mama@mail.com', password = 'password')
-        u2 = User(name = 'Mama2', motherhood_status = 'Newborn', username = 'mama2', email = 'test@mail',password = 'test')
+        u1 = User(firstname = 'Mama', lastname = '1', motherhood_status = 'Pregnant', username = 'mama', email = 'mama@mail.com', password_hash = 'test1')
+        u2 = User(firstname = 'Mama2', lastname = '2', motherhood_status = 'Newborn', username = 'mama2', email = 'test@mail',password_hash = 'test2')
         
         users = [u1,u2]
 
         print("creating affirmations...")
-        a1 = Affirmation(quote = 'I am strong')
-        a2 = Affirmation(quote = 'I am beautiful')
-        a3 = Affirmation(quote = 'I am capable')
-        a4 = Affirmation(quote = 'I am loved')
-        a5 = Affirmation(quote = 'I am a good mother')
-        a6 = Affirmation(quote = 'I am patient')
+        a1 = Affirmation(quote = '" I am strong "', like_count = 0)
+        a2 = Affirmation(quote = '" I am beautiful "', like_count = 0)
+        a3 = Affirmation(quote = '" I am capable "', like_count = 0)
+        a4 = Affirmation(quote = '" I am loved "', like_count = 0)
+        a5 = Affirmation(quote = '" I am a good mother "', like_count = 0)
+        a6 = Affirmation(quote = '" I am patient "', like_count = 0)
 
         affirmations = [a1,a2,a3,a4,a5,a6]
 
@@ -64,5 +64,7 @@ if __name__ == '__main__':
         db.session.add_all(favorites)
         db.session.add_all(journals)
         db.session.add_all(resources)
+
+        db.session.commit()
 
         print("Congrats, you've planted the seed! It's a beautiful baby database!")
