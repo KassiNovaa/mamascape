@@ -10,7 +10,7 @@ import random
 # Local imports
 from config import app, db, api
 # Add your model imports
-from models import User, Affirmation, Favorite, Journal;
+from models import User, Affirmation, Favorite, Journal, Link ;
 
 class Affirmations(Resource):       
     def get(self):
@@ -38,12 +38,11 @@ class AffirmationbyId(Resource):
     
 api.add_resource(AffirmationbyId, '/api/v1/affirmation/<int:id>')
 
-class Favorite(Resource):
+class Favorites(Resource):
     def get(self, user_id):
-        favorites = Favorite.query.filter(user_id).all()
-        affirmations = [favorite.affirmation for favorite in favorites]
-        affirmations_dict = [affirmation.to_dict() for affirmation in affirmations]
-        return make_response({'favorites': affirmations_dict}, 200)
+        favorites = Favorite.query.filter_by(user_id=user_id)
+        affirmations = [favorite.to_dict() for favorite in favorites]
+        return make_response( affirmations, 200 )
 
     def post(self, user_id ):
         params = request.json
@@ -56,43 +55,32 @@ class Favorite(Resource):
         db.session.commit()
         return make_response({'favorite': favorite.to_dict()}, 201)
     
-api.add_resource(Favorite, '/api/v1/users/<int:user_id>/favorites' )
+api.add_resource(Favorites, '/api/v1/users/<int:user_id>/favorites' )
 
 class FavoritebyId(Resource):
-
-    def delete(self, id):
-        favorite = Favorite.query.filter_by(id).first()
+    def delete(self, user_id, favorite_id):
+        favorite = Favorite.query.filter_by( user_id=user_id, id=favorite_id).first()
         if not favorite:
             return make_response({'error': 'favorite not found'}, 404)
         db.session.delete(favorite)
         db.session.commit()
-        return make_response('', 204)
+        return make_response('favorite deleted', 204)
 
-api.add_resource(FavoritebyId, '/api/v1/favorites/<int:id>')
+api.add_resource(FavoritebyId, '/api/v1/users/favorites/<int:user_id>/<int:favorite_id>')
 
-class Journal(Resource):
+class Journals (Resource):
     def get(self):
-        journals = Journal.query.all()
+        journals = Journal.query.filter_by( user_id=session.get('user_id'))
         return make_response({'journals': [journal.to_dict() for journal in journals]}, 200)
-    
-    def patch(self,id):
-        journals = Journal.query.get(id)
-        if not journals:
-            return make_response({'erorr': 'journal not found'}, 404)
-        params = request.json
-        for attr in params:
-            setattr(journals, attr, params[attr])
-        db.session.commit()
-        return make_response(journals.to_dict(), 200)
 
     def post(self):
         params = request.json
-        journal = Journal(user_id=params['user_id'], date=params['date'], entry=params['entry'])
+        journal = Journal(user_id=params['user_id'], date=params['date'], entry=params['entry'], title=params['title'])
         db.session.add(journal)
         db.session.commit()
         return make_response({'journal': journal.to_dict()}, 201)
     
-api.add_resource(Journal, '/api/v1/journals')
+api.add_resource( Journals , '/api/v1/journals')
 
 class JournalbyId(Resource):
     def delete(self, id):
@@ -103,14 +91,24 @@ class JournalbyId(Resource):
         db.session.commit()
         return make_response('', 204)
 
+    def patch(self, id):
+        journal = Journal.query.get(id)
+        if not journal:
+            return make_response({'erorr': 'journal not found'}, 404)
+        params = request.json
+        for attr in params:
+            setattr(journal, attr, params[attr])
+        db.session.commit()
+        return make_response(journal.to_dict(), 200)
+
 api.add_resource(JournalbyId, '/api/v1/journals/<int:id>')
 
-class Resource(Resource):
+class Links(Resource):
     def get(self):
-        resources = Resource.query.all()
-        return make_response({'resources': [resource.to_dict() for resource in resources]}, 200)
-    
-    api.add_resource(Resource, '/api/v1/resources')
+        all_links = Link.query.all()
+        return make_response({'links': [link.to_dict() for link in all_links]}, 200)
+
+api.add_resource(Links, '/api/v1/resources')
 
 class Users(Resource):
     def post(self):

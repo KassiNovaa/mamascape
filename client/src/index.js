@@ -4,9 +4,11 @@ import "./index.css";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
-import Journal from "./components/Journal";
 import Resources from "./components/Resources";
 import Signup from "./components/Signup";
+import JournalPage from "./components/Journal";
+import JournalEntries from "./components/JournalContainers";
+import FavortieList from "./components/FavoriteList";
 
 
 const routes = [
@@ -17,10 +19,12 @@ const routes = [
         children: [
             {index: true, element: <Dashboard/>},
             {path: '/dashboard', element: <Dashboard/>},
-            {path: '/journal', element: <Journal />},
+            {path: '/journal', element: <JournalPage />},
             {path: '/resources', element: <Resources/>},
             {path: '/login', element: <Signup/>},
             {path: '/signup', element: <Signup/>},
+            {path: '/journalEntries', element: <JournalEntries/>},
+            {path: '/favoriteAffirmations', element: <FavortieList/>},
         ],
     },
 ];

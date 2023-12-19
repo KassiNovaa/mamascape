@@ -16,15 +16,18 @@ function Navbar({ user,setUser }){
 
 
     return (
-        <GridItem align="right" pl="2" bg="green.200" area="header">
+        <GridItem align="right" pl="2" bg="green.400" area="header">
         <Flex align="center" justify="space-between">
           <Menu>
             <MenuButton p="2">
               <Avatar size="md" name={user.firstname} />
             </MenuButton>
             <MenuList>
-              <MenuItem as="a" href="#">
-                Profile
+              <MenuItem as={NavLink} to= "/favoriteAffirmations">
+                Favorite Affirmations
+              </MenuItem>
+              <MenuItem as={NavLink} to="/journalEntries">
+                Journal Entries
               </MenuItem>
               <MenuItem onClick={handleLogout} as="a" type="submit">
                 Log out

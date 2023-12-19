@@ -74,6 +74,7 @@ class Journal(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     date = db.Column(db.String)
     entry = db.Column(db.String)
+    title = db.Column(db.String)
     user = db.relationship('User', back_populates = 'journals')
     serialize_rules = ('-journals.user',)
 
@@ -83,8 +84,8 @@ class Journal(db.Model, SerializerMixin):
     
     ## This is the Resource model
        
-class Resource(db.Model, SerializerMixin):
-    __tablename__ = 'resources'
+class Link(db.Model, SerializerMixin):
+    __tablename__ = 'links'
 
     id = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String)
@@ -92,4 +93,4 @@ class Resource(db.Model, SerializerMixin):
     url = db.Column(db.String)
 
     def __repr__(self):
-        return f'<Resources {self.id}: {self.title} {self.description} {self.url}>'
+        return f'<Link {self.id}: {self.title} {self.description} {self.url}>'
