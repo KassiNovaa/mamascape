@@ -54,7 +54,7 @@ if __name__ == '__main__':
         journals = [j1,j2,j3,j4]
 
         print("creating resources...")
-        r1 = Resource(title = 'Resource 1', description = 'This is a resource', url = 'www.resource.com')
+        r1 = Resource(title = 'Therapy And Support For New Moms', description = 'Being a parent is tough. Lets do this together.', url = 'https://chsfl.org/services/for-parents/' )
         r2 = Resource(title = 'Resource 2', description = 'This is a resource', url = 'www.resource.com')
 
         resources = [r1,r2]

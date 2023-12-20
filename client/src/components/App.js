@@ -5,12 +5,14 @@ import Signup from './Signup';
 import Navbar from './Navbar';
 
 
-
 function App() {
   const [user, setUser] = useState(null);
   const [favorites, setFavorites] = useState([]);
   const [journalEntries, setJournalEntries] = useState([]);
   const [affirmation, setAffirmation] = useState([]);
+  const [isFavorited, setIsFavorited] = useState(false);
+
+  // console.log(favorites, 'favorites in app.js')
 
   useEffect(() => {
     fetch('/authorized')
@@ -33,6 +35,28 @@ function App() {
             console.log(affirmation, 'affirmation');
         });
   }, []);
+
+  const handleRemoveButton = () => {        
+    fetch(`/users/favorites/${user.id}/${isFavorited}`, {
+      method: 'DELETE',
+    })
+      .then((r) => {
+        console.log('Fetch response:', r);
+        if (!r.ok) {
+          throw new Error(`HTTP error! Status: ${r.status}`);
+        }
+      })
+      .then(() => {
+        setFavorites((prevFavorites) =>
+          prevFavorites.filter((fav) => fav.id !== isFavorited)
+        );
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+
+      setIsFavorited(false);
+  };
 
   useEffect(() => { 
     if (user){
@@ -71,7 +95,10 @@ function App() {
     journalEntries,
     setJournalEntries,
     affirmation,
-    setAffirmation
+    setAffirmation,
+    isFavorited,
+    setIsFavorited,
+    handleRemoveButton
   };
   
 

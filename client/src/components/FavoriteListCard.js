@@ -1,31 +1,27 @@
 import React from 'react';
 import { Box, Card, CardBody, IconButton, Tooltip } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
+import { useOutletContext } from "react-router-dom";
 
-function FavoriteListCard({ favorite, quote, onDelete }) {
-  const handleDelete = () => {
-    onDelete(favorite.id);
-  };
+function FavoriteListCard({ favorite, quote }) {
+
+  const { handleRemoveButton } = useOutletContext();
 
   return (
     <Card maxW="sm">
-      <CardBody>
-        <Box as="h3" fontSize="xl" fontWeight="bold">
+      <CardBody display="flex" alignItems="center">
+        <Box as="h3" fontSize="md" flex="1">
           {quote}
         </Box>
-        <p>{favorite.description}</p>
-      </CardBody>
-
-      <Box borderTopWidth="1px" borderTopColor="gray.200" p={2}>
         <Tooltip label="Delete">
           <IconButton
             colorScheme="red"
             aria-label="Delete favorite affirmation"
-            icon={<DeleteIcon />}
-            onClick={handleDelete}
+            icon={<DeleteIcon size="xs" />}
+            onClick={handleRemoveButton}
           />
         </Tooltip>
-      </Box>
+      </CardBody>
     </Card>
   );
 }

@@ -1,4 +1,3 @@
-import React, {useState, useEffect} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import { Grid, GridItem, CardHeader, CardBody, Card, CardFooter, Text, Heading, SimpleGrid, Box} from '@chakra-ui/react';
 import AffirmationContainer from './AffirmationContainer';

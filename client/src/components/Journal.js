@@ -56,8 +56,8 @@ function JournalPage() {
   
     return (
     <Flex width="full" align="center" justifyContent="center" minHeight="100vh" background={`url('https://img.freepik.com/free-vector/hand-drawn-leaves-floral-isolated-clipart_41066-2803.jpg?w=1800&t=st=1702016237~exp=1702016837~hmac=6828e1076cd1c221b505900917e2ee800f34dbc30836a5ed85547daffed315a1')`} backgroundSize="cover">
-        <Box width="sm" p={4} boxShadow="dark-lg" rounded="md" bg="white">
-          <Heading align='center' size='md'>Journal Entry</Heading>
+        <Box mb={10} width="sm" p={6} boxShadow="dark-lg" rounded="md" bg="white">
+          <Heading align='center' size='lg' fontFamily='Bree Serif' fontStyle='italic' color='grey' >Journal Entry</Heading>
           <form onSubmit={formik.handleSubmit}>
             <FormControl isRequired>
               <FormLabel> Date</FormLabel>

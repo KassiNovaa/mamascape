@@ -10,13 +10,41 @@ function JournalCard({ journalEntry }) {
   };
 
   const handleEdit = () => {
-    // Implement the edit functionality here
-    console.log('Edit journal entry:', journalEntry.id);
+    fetch(`/api/v1/journals/${journalEntry.id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ /* Update the properties you want to change */ }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        // Handle successful update if needed
+        console.log('Edit journal entry:', journalEntry.id);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+
+      
   };
 
   const handleDelete = () => {
-    // Implement the delete functionality here
-    console.log('Delete journal entry:', journalEntry.id);
+    fetch(`/api/v1/journals/${journalEntry.id}`, {
+      method: 'DELETE',
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        // Handle successful deletion if needed
+        console.log('Delete journal entry:', journalEntry.id);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   };
 
   return (

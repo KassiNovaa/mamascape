@@ -1,29 +1,32 @@
 import { Button, Box, List, ListItem, ListIcon } from '@chakra-ui/react';
 import { MdCheckCircle } from 'react-icons/md';
+import { useOutletContext } from "react-router-dom";
 
-function favoritesCard({ setFavorites, userId, favorite_id, setIsFavorited }) {
+function FavoritesCard() {
 
-    const handleRemoveButton = () => {        
-        fetch(`/users/favorites/${userId}/${favorite_id}`, {
-          method: 'DELETE',
-        })
-          .then((r) => {
-            console.log('Fetch response:', r);
-            if (!r.ok) {
-              throw new Error(`HTTP error! Status: ${r.status}`);
-            }
-          })
-          .then(() => {
-            setFavorites((prevFavorites) =>
-              prevFavorites.filter((fav) => fav.id !== favorite_id)
-            );
-          })
-          .catch((error) => {
-            console.error('Error:', error);
-          });
+    const { handleRemoveButton } = useOutletContext();
+    
+    // const handleRemoveButton = () => {        
+    //     fetch(`/users/favorites/${userId}/${favorite_id}`, {
+    //       method: 'DELETE',
+    //     })
+    //       .then((r) => {
+    //         console.log('Fetch response:', r);
+    //         if (!r.ok) {
+    //           throw new Error(`HTTP error! Status: ${r.status}`);
+    //         }
+    //       })
+    //       .then(() => {
+    //         setFavorites((prevFavorites) =>
+    //           prevFavorites.filter((fav) => fav.id !== favorite_id)
+    //         );
+    //       })
+    //       .catch((error) => {
+    //         console.error('Error:', error);
+    //       });
 
-          setIsFavorited(false);
-      };
+    //       setIsFavorited(false);
+    //   };
 
 
   return (
@@ -40,4 +43,4 @@ function favoritesCard({ setFavorites, userId, favorite_id, setIsFavorited }) {
   ) }
      
 
-export default favoritesCard;
+export default FavoritesCard;
