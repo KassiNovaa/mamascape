@@ -23,11 +23,11 @@ function Navbar({ user,setUser }){
               <Avatar size="md" name={user.firstname} />
             </MenuButton>
             <MenuList>
-              <MenuItem as={NavLink} to= "/favoriteAffirmations">
-                Favorite Affirmations
+              <MenuItem as={NavLink} to= "/myaffirmations">
+                My Affirmations
               </MenuItem>
-              <MenuItem as={NavLink} to="/journalEntries">
-                Journal Entries
+              <MenuItem as={NavLink} to="/myjournal">
+                My Journals
               </MenuItem>
               <MenuItem onClick={handleLogout} as="a" type="submit">
                 Log out

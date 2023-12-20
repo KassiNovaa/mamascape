@@ -6,6 +6,7 @@
 from flask import request, make_response, session
 from flask_restful import Resource
 import random 
+import ipdb
 
 # Local imports
 from config import app, db, api
@@ -93,11 +94,15 @@ class JournalbyId(Resource):
 
     def patch(self, id):
         journal = Journal.query.get(id)
+        # ipdb.set_trace()
         if not journal:
-            return make_response({'erorr': 'journal not found'}, 404)
+            return make_response({'error': 'journal not found'}, 404)
         params = request.json
-        for attr in params:
-            setattr(journal, attr, params[attr])
+        try:
+            for attr in params:
+                setattr(journal, attr, params[attr])
+        except Exception as e:
+            return make_response({'error': str(e)}, 400)
         db.session.commit()
         return make_response(journal.to_dict(), 200)
 

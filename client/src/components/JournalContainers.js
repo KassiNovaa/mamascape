@@ -2,11 +2,11 @@ import { useOutletContext } from "react-router-dom";
 import JournalCard from "./JournalCard";
 
 function JournalEntries() {
-  const { journalEntries } = useOutletContext();
+  const { journalEntries, setJournalEntries } = useOutletContext();
   console.log(journalEntries); // Check the value of journalEntries
 
   const journalEntriesList = journalEntries.map(journalEntry => (
-    <JournalCard key={journalEntry.id} journalEntry={journalEntry} />
+    <JournalCard key={journalEntry.id} journalEntry={journalEntry} setJournalEntries={setJournalEntries}/>
   ));
 
   return (

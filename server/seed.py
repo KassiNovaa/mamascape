@@ -46,10 +46,10 @@ if __name__ == '__main__':
         favorites = [f1,f2,f3,f4]
 
         print("creating journals...")
-        j1 = Journal(user = u1, date = '2020-01-01', entry = 'Today was a good day')
-        j2 = Journal(user = u1, date = '2020-01-02', entry = 'Today was a bad day')
-        j3 = Journal(user = u2, date = '2020-01-01', entry = 'Today was a happy day')
-        j4 = Journal(user = u2, date = '2020-01-02', entry = 'Today was a sad day')
+        j1 = Journal(user = u1, title = 'Test1', date = '2020-01-01', entry = 'Today was a good day')
+        j2 = Journal(user = u1, title = 'Test2', date = '2020-01-02', entry = 'Today was a bad day')
+        j3 = Journal(user = u2, title = 'Test3', date = '2020-01-01', entry = 'Today was a happy day')
+        j4 = Journal(user = u2, title = 'Test4', date = '2020-01-02', entry = 'Today was a sad day')
 
         journals = [j1,j2,j3,j4]
 

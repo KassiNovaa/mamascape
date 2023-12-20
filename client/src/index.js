@@ -23,8 +23,8 @@ const routes = [
             {path: '/resources', element: <Resources/>},
             {path: '/login', element: <Signup/>},
             {path: '/signup', element: <Signup/>},
-            {path: '/journalEntries', element: <JournalEntries/>},
-            {path: '/favoriteAffirmations', element: <FavortieList/>},
+            {path: '/myjournal', element: <JournalEntries/>},
+            {path: '/myaffirmations', element: <FavortieList/>},
         ],
     },
 ];

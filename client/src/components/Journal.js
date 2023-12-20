@@ -4,14 +4,17 @@ import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Textarea, Se
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
+
 function JournalPage() {
 
   // create a container for the journal entries to map through and create a component for each entry and have a edit button and delete button
 
     const [newEntry, setNewEntry] = useState(true);
+    const [currentEntry, setCurrentEntry] = useState('');
+    
     const navigate = useNavigate();
 
-    const { user } = useOutletContext();
+    const { user, setJournalEntries } = useOutletContext();
     console.log(user, 'user')
   
     const newEntrySchema = yup.object().shape({
@@ -39,9 +42,9 @@ function JournalPage() {
         }).then((resp) => {
             console.log('Fetch response:', resp)
           if (resp.ok) {
-            resp.json().then(({ newEntry }) => {
-              setNewEntry(newEntry); // will need to change this to setJournalEntries curr to curr to list plus this new value *updating state
-              navigate('/journalEntries');
+            resp.json().then(({ journal }) => {
+              setJournalEntries((allCurrEntry)=> [...allCurrEntry, journal])
+              navigate('/myjournal');
             });
           } else {
             console.log('error');
@@ -104,6 +107,7 @@ function JournalPage() {
           </form>
         </Box>
       </Flex>
+      
     );
   }
 
