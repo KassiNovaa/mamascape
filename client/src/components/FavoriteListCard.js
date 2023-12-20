@@ -8,7 +8,7 @@ function FavoriteListCard({ favorite, quote }) {
   const { handleRemoveButton } = useOutletContext();
 
   return (
-    <Card maxW="sm">
+    <Card border='none' background='transparent' maxW="sm">
       <CardBody display="flex" alignItems="center">
         <Box as="h3" fontSize="md" flex="1">
           {quote}

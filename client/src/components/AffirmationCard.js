@@ -49,11 +49,11 @@ function AffirmationCard({ quote, like_count, id, setAffirmation, userId, setFav
   };
 
   return (
-<Card maxW='sm'>
+<Card background='#F0FFF4' maxW='sm'>
   <CardBody>
     <Flex flexDirection="column" alignItems="center">
       <Stack mt='6' spacing='3'>
-        <Text aligm='center' fontSize='3xl' color='pink.300' fontFamily='Bree Serif' fontStyle='italic' >
+        <Text aligm='center' fontSize='3xl' color='grey' fontFamily='Bree Serif' fontStyle='italic' >
           {quote}
         </Text>
       </Stack>

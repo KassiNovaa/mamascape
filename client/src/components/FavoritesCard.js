@@ -30,7 +30,7 @@ function FavoritesCard() {
 
 
   return (
-    <Box bg={'white'} mt='6' >
+    <Box mt='6' >
         <List spacing={3} >
             <ListItem>
                 <ListIcon as={MdCheckCircle} color='green.500' />

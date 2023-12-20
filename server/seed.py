@@ -17,7 +17,6 @@ if __name__ == '__main__':
         User.query.delete()
         Affirmation.query.delete()
         Favorite.query.delete()
-        Journal.query.delete()
         Resource.query.delete()
 
         print("creating users...")
@@ -34,8 +33,16 @@ if __name__ == '__main__':
         a4 = Affirmation(quote = '" I am loved "', like_count = 0)
         a5 = Affirmation(quote = '" I am a good mother "', like_count = 0)
         a6 = Affirmation(quote = '" I am patient "', like_count = 0)
+        a7 = Affirmation(quote = '" I am enough "', like_count = 0)
+        a8 = Affirmation(quote = ' "I am a loving and nurturing mother, and my children feel safe and cherished in my presence."', like_count = 0)
+        a9 = Affirmation(quote = ' "I embrace the imperfections of motherhood, knowing that my love and effort are more than enough for my family."', like_count = 0)
+        a10 = Affirmation(quote = ' "I am a strong, confident, and capable mother."', like_count = 0)
+        a11 = Affirmation(quote = ' "I am a loving mother."', like_count = 0)
+        a12 = Affirmation(quote = ' "I prioritize self-care to replenish my own well-being, knowing that a happy and fulfilled mother positively influences her family."', like_count = 0)
+        a13 = Affirmation(quote = ' "I let go of the pressure to have it all figured out; I am a work in progress, and thats perfectly okay."', like_count = 0)
+        a14 = Affirmation(quote = ' "My children dont need a perfect mother... they need a loving and authentic one, and thats who I am."', like_count = 0)
 
-        affirmations = [a1,a2,a3,a4,a5,a6]
+        affirmations = [a1,a2,a3,a4,a5,a6, a7, a8, a9, a10, a11, a12, a13, a14]
 
         print("creating favorites...")
         f1 = Favorite(user = u1, affirmation = a1)
@@ -45,24 +52,27 @@ if __name__ == '__main__':
 
         favorites = [f1,f2,f3,f4]
 
-        print("creating journals...")
-        j1 = Journal(user = u1, title = 'Test1', date = '2020-01-01', entry = 'Today was a good day')
-        j2 = Journal(user = u1, title = 'Test2', date = '2020-01-02', entry = 'Today was a bad day')
-        j3 = Journal(user = u2, title = 'Test3', date = '2020-01-01', entry = 'Today was a happy day')
-        j4 = Journal(user = u2, title = 'Test4', date = '2020-01-02', entry = 'Today was a sad day')
-
-        journals = [j1,j2,j3,j4]
+        print("skipping journals...")
 
         print("creating resources...")
         r1 = Resource(title = 'Therapy And Support For New Moms', description = 'Being a parent is tough. Lets do this together.', url = 'https://chsfl.org/services/for-parents/' )
-        r2 = Resource(title = 'Resource 2', description = 'This is a resource', url = 'www.resource.com')
+        r2 = Resource(title = 'Domestic Violence Support', description = 'Here for you.', url = 'https://www.thehotline.org/')
+        r3 = Resource(title = 'Postpartum Support International', description = 'Here for you.', url = 'https://www.postpartum.net/')
 
-        resources = [r1,r2]
+        r4 = Resource(title = 'Child Care Help', description = 'Here for you.', url = 'https://familyservices.floridaearlylearning.com/')
+
+        r5 = Resource(title = 'Family Assitance Programs', description = 'Here for you.', url = 'https://www.floridahealth.gov/programs-and-services/wic/links.html')
+        r6 = Resource(title = 'Healthcare Assistance Programs', description = 'Here for you.', url = 'https://www.floridahealth.gov/programs-and-services/childrens-health/child-care-for-children-with-special-health-care-needs/index.html')
+        r7 = Resource(title = 'Food Assistance Programs', description = 'Here for you.', url = 'https://www.myflfamilies.com/service-programs/access/food-assistance.shtml')
+        r8 = Resource(title = 'WIC', description = 'Here for you.', url = 'https://www.myflfamilies.com/service-programs/access/child-care.shtml')
+        r9 = Resource(title = 'BreastFeeding Helpline', description = 'Here for you.', url = 'https://www.myflfamilies.com/service-programs/access/child-care.shtml')
+        r10 = Resource(title = 'Pregnancy and Postpartum workouts', description = 'Here for you.', url = 'https://www.youtube.com/@PregnancyandPostpartumTV')
+
+        resources = [r1,r2, r3, r4, r5, r6, r7, r8, r9, r10]
 
         db.session.add_all(users)
         db.session.add_all(affirmations)
         db.session.add_all(favorites)
-        db.session.add_all(journals)
         db.session.add_all(resources)
 
         db.session.commit()

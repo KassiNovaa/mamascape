@@ -18,7 +18,7 @@ function FavoriteList({}) {
     area={'main'}
   >
 
-    <Card align='left'maxW="md" mx="auto" bg="white" p={4} mt={4}>
+    <Card align='left'maxW="md" mx="auto" bg="#F0FFF4" p={4} mt={4}>
       <Heading mt={4} fontSize='3xl' color='grey' fontFamily='Bree Serif'> Favorite Affirmations List </Heading>
       <Text mt={4}>
           {favoritesList}
